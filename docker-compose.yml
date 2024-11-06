@@ -11,7 +11,7 @@ services:
     volumes:
       - ./openboxes-mysql.cnf:/etc/mysql/conf.d/openboxes-mysql.cnf
     ports:
-      - "3306:3306"
+      - "3307:3306"
 
   grails:
     build: ./grails-java7
