@@ -25,7 +25,6 @@ services:
       - ./openboxes-config.properties:/root/.grails/openboxes-config.properties
       - ./openboxes-setenv.sh:/usr/share/tomcat7/bin/setenv.sh
       - ./openboxes-run.sh:/root/openboxes-run.sh
-      - ../openboxes:/app
     depends_on:
       - db
 
