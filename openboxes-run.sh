@@ -18,6 +18,8 @@ npm i --no-package-lock --legacy-peer-deps --force --verbose --stacktrace --unsa
 
 # Run the application in staging environment
 #grails run-app --stacktrace
+grails -Dgrails.env=production war
 grails -Dgrails.env=production run-app --stacktrace
+
 
 
