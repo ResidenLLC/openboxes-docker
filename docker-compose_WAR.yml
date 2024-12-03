@@ -1,8 +1,7 @@
 version: "3"
 services:
   db:
-    image: mysql:5.7.44
-    platform: linux/amd64
+    image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: openboxes
@@ -14,18 +13,18 @@ services:
       - "3307:3306"
 
   tomcat:
-    image: tomcat:7.0-jre7
-    platform: linux/amd64
+    image: tomcat:8.5-jre8
     environment:
       - JAVA_OPTS=-Xmx8192M -Xverify:none
     ports:
       - "8080:8080"
     volumes:
-      - ./openboxes-0.8.20-SNAPSHOT.war:/usr/local/tomcat/webapps/openboxes.war
+      - ./context.xml:/usr/local/tomcat/conf/context.xml:ro
+      - ./openboxes.war:/usr/local/tomcat/webapps/openboxes.war
+      - ./openboxes-config.properties:/usr/local/tomcat/.grails/openboxes-config.properties
       - ./openboxes-config.properties:/root/.grails/openboxes-config.properties
-      - ./openboxes-setenv.sh:/usr/share/tomcat7/bin/setenv.sh
+      - ./openboxes-setenv.sh:/usr/share/tomcat8/bin/setenv.sh
       - ./openboxes-run.sh:/root/openboxes-run.sh
     depends_on:
       - db
-
 

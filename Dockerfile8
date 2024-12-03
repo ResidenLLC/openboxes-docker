@@ -1,0 +1,33 @@
+# Use OpenJDK 8 as base image
+FROM openjdk:8-jdk
+
+LABEL maintainer="Your Name <your.email@example.com>"
+
+# Update and install necessary tools
+RUN apt-get update && apt-get install -y curl unzip zip \
+  && curl -I https://get.sdkman.io || { echo "Network check failed"; exit 1; }
+
+# Install SDKMAN
+RUN curl -s "https://get.sdkman.io" | bash || { echo "SDKMAN install failed"; exit 1; }
+RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh && sdk version" || { echo "SDKMAN setup failed"; exit 1; }
+
+# Install Grails via SDKMAN
+RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh && sdk install grails 6.2.2 && sdk default grails 6.2.2"
+
+# Configure environment variables
+ENV GRAILS_HOME /root/.sdkman/candidates/grails/current
+ENV PATH $GRAILS_HOME/bin:$PATH
+
+# Set working directory
+WORKDIR /app
+
+# Copy application files
+COPY . /app
+
+WORKDIR /app
+
+EXPOSE 8080
+# Command to run Grails
+#CMD ["grails", "run-app"]
+
+CMD ["bash", "-c", "while true; do sleep 30; done"]
